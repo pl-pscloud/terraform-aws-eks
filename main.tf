@@ -13,6 +13,11 @@ resource "aws_eks_cluster" "pscloud-eks-cluster" {
     aws_iam_role_policy_attachment.pscloud-iam-eks-cluster-policy,
     aws_iam_role_policy_attachment.pscloud-iam-eks-service-policy,
   ]
+
+  tags = {
+    Name            = "${var.pscloud_company}_eks_cluster_${var.pscloud_env}_${var.pscloud_project}"
+    Project         = var.pscloud_project
+  }
 }
 
 
@@ -65,13 +70,21 @@ resource "aws_eks_node_group" "pscloud-eks-node-group" {
   instance_types   = var.pscloud_instance_types
   disk_size        = var.pscloud_disk_size
 
-  //ec2_ssh_key       = var.pscloud_ssh_key_name
+  remote_access{
+    ec2_ssh_key       = var.pscloud_ssh_key_name
+  }
+  //
 
 
   scaling_config {
     desired_size = var.pscloud_node_group_desired
     max_size     = var.pscloud_node_group_max
     min_size     = var.pscloud_node_group_min
+  }
+
+  tags = {
+    Name            = "${var.pscloud_company}_eks_ec2_node_group_${var.pscloud_env}_${var.pscloud_project}"
+    Project         = var.pscloud_project
   }
 
   depends_on = [
