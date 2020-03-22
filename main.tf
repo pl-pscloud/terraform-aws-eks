@@ -7,6 +7,7 @@ resource "aws_eks_cluster" "pscloud-eks-cluster" {
 
   vpc_config {
     subnet_ids = var.pscloud_subnets_ids
+    security_group_ids = var.pscloud_security_groups_ids
   }
 
   depends_on = [

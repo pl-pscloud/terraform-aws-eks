@@ -4,6 +4,7 @@ variable "pscloud_project" {}
 variable "pscloud_aws_profile" {}
 
 variable "pscloud_subnets_ids" {}
+variable "pscloud_security_groups_ids" { default = []}
 
 variable "pscloud_ssh_key_name" { default = "" }
 variable "pscloud_subnets_ids_for_node_group" {}
